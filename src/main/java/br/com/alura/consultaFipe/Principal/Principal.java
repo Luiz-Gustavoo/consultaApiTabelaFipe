@@ -1,33 +1,27 @@
 package br.com.alura.consultaFipe.Principal;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import br.com.alura.consultaFipe.services.ConsumoApi;
+
+import java.util.Scanner;
 
 public class Principal {
+    private Scanner leitor = new Scanner(System.in);
+    private String endereco = "https://parallelum.com.br/fipe/api/v1/";
 
-    public String principal() {
+    public void exibeMenu() {
+        System.out.println("Opções de veículos:\n" +
+                "carros\n" +
+                "motos\n" +
+                "caminhoes\n");
 
-        HttpClient client = HttpClient.newHttpClient();
+        System.out.println("Digite o tipo de veículo que quer localizar: ");
+        String tipoVeiculo = leitor.nextLine();
+        System.out.println(tipoVeiculo);
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://parallelum.com.br/fipe/api/v1/carros/marcas"))
-                .build();
-
-        HttpResponse<String> response = null;
-
-        try {
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        String json = response.body();
-        return json;
+        endereco = "https://parallelum.com.br/fipe/api/v1/" + tipoVeiculo +"/marcas/";
+        ConsumoApi consumoApi = new ConsumoApi();
+        String retornoApi = consumoApi.consumoApi(endereco);
+        System.out.println(retornoApi);
     }
 }
 
