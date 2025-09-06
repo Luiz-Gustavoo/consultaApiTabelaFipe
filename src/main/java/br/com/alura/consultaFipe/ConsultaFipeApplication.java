@@ -15,7 +15,6 @@ public class ConsultaFipeApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		Principal principal = new Principal();
-		String retorno = principal.principal();
-		System.out.println(retorno);
+		principal.exibeMenu();
 	}
 }
