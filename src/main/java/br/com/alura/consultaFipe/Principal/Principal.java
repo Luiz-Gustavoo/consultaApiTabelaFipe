@@ -11,6 +11,9 @@ public class Principal {
     private String endereco = "https://parallelum.com.br/fipe/api/v1/";
 
     public void exibeMenu() {
+        ConsumoApi consumoApi = new ConsumoApi();
+        ConverteDados converteDados = new ConverteDados();
+
         System.out.println("Opções de veículos:\n" +
                 "carros\n" +
                 "motos\n" +
@@ -18,16 +21,22 @@ public class Principal {
 
         System.out.println("Digite o tipo de veículo que quer localizar: ");
         String tipoVeiculo = leitor.nextLine();
-        System.out.println(tipoVeiculo);
 
-        endereco = "https://parallelum.com.br/fipe/api/v1/" + tipoVeiculo +"/marcas/";
-        ConsumoApi consumoApi = new ConsumoApi();
-        String retornoApi = consumoApi.consumoApi(endereco);
+        endereco = "https://parallelum.com.br/fipe/api/v1/"+tipoVeiculo+"/marcas/";
+        String listaMarcas = consumoApi.consumoApi(endereco);
 
-        ConverteDados converteDados = new ConverteDados();
-         Marca[] lista = converteDados.converteDados(retornoApi, Marca[].class);
+         Marca[] listaMarcasConvertida = converteDados.converteDados(listaMarcas, Marca[].class);
+        System.out.println("Lista de marcas de " + tipoVeiculo+"\n");
+        for(Marca marca: listaMarcasConvertida){
+            System.out.println("Código: " + marca.codigo() + ", " + "Nome: " + marca.nome());
+        }
 
+        System.out.println("\nEscolha uma marca para consulta");
+        String codMarca = leitor.nextLine();
 
+        endereco = "https://parallelum.com.br/fipe/api/v1/" + tipoVeiculo+"/marcas"+"/"+codMarca+"/modelos/";
+        String listaModelos = consumoApi.consumoApi(endereco);
+        System.out.println(listaModelos);
 
     }
 }
