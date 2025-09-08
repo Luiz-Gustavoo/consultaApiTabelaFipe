@@ -1,9 +1,13 @@
 package br.com.alura.consultaFipe.Principal;
 
 import br.com.alura.consultaFipe.Modelos.Marca;
+import br.com.alura.consultaFipe.Modelos.Modelo;
+import br.com.alura.consultaFipe.Modelos.Modelos;
 import br.com.alura.consultaFipe.services.ConsumoApi;
 import br.com.alura.consultaFipe.services.ConverteDados;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
@@ -37,6 +41,9 @@ public class Principal {
         endereco = "https://parallelum.com.br/fipe/api/v1/" + tipoVeiculo+"/marcas"+"/"+codMarca+"/modelos/";
         String listaModelos = consumoApi.consumoApi(endereco);
         System.out.println(listaModelos);
+
+
+
 
     }
 }
