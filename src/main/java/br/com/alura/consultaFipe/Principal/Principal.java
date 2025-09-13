@@ -32,7 +32,8 @@ public class Principal {
          Marca[] listaMarcasConvertida = converteDados.converteDados(listaMarcas, Marca[].class);
         System.out.println("Lista de marcas de " + tipoVeiculo+"\n");
         for(Marca marca: listaMarcasConvertida){
-            System.out.println("Código: " + marca.codigo() + ", " + "Nome: " + marca.nome());
+            System.out.println(
+                    "Código: " + marca.codigo() + ", " + "Nome: " + marca.nome());
         }
 
         System.out.println("\nEscolha uma marca para consulta");
@@ -40,11 +41,14 @@ public class Principal {
 
         endereco = "https://parallelum.com.br/fipe/api/v1/" + tipoVeiculo+"/marcas"+"/"+codMarca+"/modelos/";
         String listaModelos = consumoApi.consumoApi(endereco);
-        System.out.println(listaModelos);
 
-       Modelos modelos = converteDados.converteDados(listaModelos, Modelos.class);
-        System.out.println(modelos);
-
+       Modelos listaModelosConvertida = converteDados.converteDados(listaModelos, Modelos.class);
+        System.out.println("Lista de modelos da marca de código " + codMarca);
+       List<Modelo> listaModelo = listaModelosConvertida.modelos();
+       for(Modelo modelo: listaModelo){
+           System.out.println(
+                   "Código: " + modelo.codigo() + ", " + "Nome: "+ modelo.nome());
+       }
     }
 }
 
