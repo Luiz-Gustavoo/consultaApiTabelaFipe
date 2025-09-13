@@ -9,14 +9,12 @@ public class ConverteDados implements IOConverteDados{
     @Override
     public <T> T converteDados(String json, Class<T> classe) {
         ObjectMapper objectMapper = new ObjectMapper();
-        T retorno = null;
+
         try {
-            retorno = objectMapper.readValue(json, classe);
+            return objectMapper.readValue(json, classe);
 
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
-        return retorno;
     }
 }
