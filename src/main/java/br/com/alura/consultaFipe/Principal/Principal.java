@@ -42,8 +42,8 @@ public class Principal {
         String listaModelos = consumoApi.consumoApi(endereco);
         System.out.println(listaModelos);
 
-
-
+       Modelos modelos = converteDados.converteDados(listaModelos, Modelos.class);
+        System.out.println(modelos);
 
     }
 }
