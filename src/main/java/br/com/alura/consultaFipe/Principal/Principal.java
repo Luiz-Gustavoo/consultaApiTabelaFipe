@@ -9,6 +9,7 @@ import br.com.alura.consultaFipe.services.ConverteDados;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal {
     private Scanner leitor = new Scanner(System.in);
@@ -43,12 +44,25 @@ public class Principal {
         String listaModelos = consumoApi.consumoApi(endereco);
 
        Modelos listaModelosConvertida = converteDados.converteDados(listaModelos, Modelos.class);
-        System.out.println("Lista de modelos da marca de código " + codMarca);
+        System.out.println("\nLista de modelos da marca de código " + codMarca);
        List<Modelo> listaModelo = listaModelosConvertida.modelos();
        for(Modelo modelo: listaModelo){
            System.out.println(
                    "Código: " + modelo.codigo() + ", " + "Nome: "+ modelo.nome());
        }
+
+        System.out.println("\nDigite o nome do modelo que deseja buscar");
+       String modeloSolicitado = leitor.nextLine();
+
+        System.out.println("\nLista de modelos solicitados");
+       List<Modelo> listaModeloSolicitado = listaModelo.stream()
+               .filter(modelo -> modelo.nome().toLowerCase().contains(modeloSolicitado))
+               .collect(Collectors.toList());
+
+        for(Modelo modelo: listaModeloSolicitado){
+            System.out.println(
+                    "Código: " + modelo.codigo() + ", " + "Nome: "+ modelo.nome());
+        }
     }
 }
 
