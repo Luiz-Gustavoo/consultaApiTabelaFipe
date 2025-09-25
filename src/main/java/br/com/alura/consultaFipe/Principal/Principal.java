@@ -37,7 +37,7 @@ public class Principal {
                     "Código: " + marca.codigo() + ", " + "Nome: " + marca.nome());
         }
 
-        System.out.println("\nEscolha uma marca para consulta");
+        System.out.println("\nEscolha uma marca pelo código para consulta");
         String codMarca = leitor.nextLine();
 
         endereco = "https://parallelum.com.br/fipe/api/v1/" + tipoVeiculo+"/marcas"+"/"+codMarca+"/modelos/";
@@ -63,6 +63,13 @@ public class Principal {
             System.out.println(
                     "Código: " + modelo.codigo() + ", " + "Nome: "+ modelo.nome());
         }
+
+        System.out.println("\nEscolha um modelo pelo código para cosulta");
+        String codModelo = leitor.nextLine();
+
+        endereco = "https://parallelum.com.br/fipe/api/v1/" + tipoVeiculo+"/marcas"+"/"+codMarca+"/modelos/"+codModelo+"/anos";
+        String listaModeloPorAno = consumoApi.consumoApi(endereco);
+        System.out.println(listaModeloPorAno);
     }
 }
 
