@@ -1,8 +1,6 @@
 package br.com.alura.consultaFipe.Principal;
 
-import br.com.alura.consultaFipe.Modelos.Marca;
-import br.com.alura.consultaFipe.Modelos.Modelo;
-import br.com.alura.consultaFipe.Modelos.Modelos;
+import br.com.alura.consultaFipe.Modelos.*;
 import br.com.alura.consultaFipe.services.ConsumoApi;
 import br.com.alura.consultaFipe.services.ConverteDados;
 
@@ -65,11 +63,24 @@ public class Principal {
         }
 
         System.out.println("\nEscolha um modelo pelo código para cosulta");
-        String codModelo = leitor.nextLine();
+        String codModelo = leitor.next();
 
         endereco = "https://parallelum.com.br/fipe/api/v1/" + tipoVeiculo+"/marcas"+"/"+codMarca+"/modelos/"+codModelo+"/anos";
         String listaModeloPorAno = consumoApi.consumoApi(endereco);
-        System.out.println(listaModeloPorAno);
+        Anos[] listaModeloPorAnoConvertida = converteDados.converteDados(listaModeloPorAno, Anos[].class);
+
+        List<Veiculo> listaVeiculos = new ArrayList<>();
+        for (Anos ano: listaModeloPorAnoConvertida) {
+            endereco = "https://parallelum.com.br/fipe/api/v1/" + tipoVeiculo+"/marcas"+"/"+codMarca+"/modelos/"+codModelo+"/anos/"+ano.codigo();
+            String veiculo = consumoApi.consumoApi(endereco);
+           Veiculo veiculoCovertido = converteDados.converteDados(veiculo, Veiculo.class);
+           listaVeiculos.add(veiculoCovertido);
+        }
+
+        System.out.println("\nTodos os modelos por ano");
+        for(Veiculo veiculo: listaVeiculos) {
+            System.out.println(veiculo.modelo() + ", Ano: " + veiculo.anoModelo() + ", Valor: " + veiculo.valor() + ", Combustível: " + veiculo.combustivel());
+        }
     }
 }
 
